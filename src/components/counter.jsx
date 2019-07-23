@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    value: this.props.value,
+    value: this.props.counter.value,
     tags: ["tag1", "tag2", "tag3"]
   };
 
@@ -11,26 +11,21 @@ class Counter extends Component {
     fontWeight: "bold"
   };
 
-  handleIncrement = product => {
-    console.log(product);
-    this.state.value++;
-
-    // property can be named anything. it just points that this value is doing sth to this component
-    this.setState({ value: this.state.value });
-  };
-
   render() {
-    console.log(this.props);
-
     return (
       <React.Fragment>
-        <h4>{this.props.id}</h4>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={() => this.handleIncrement({ id: 1 })}
+          onClick={() => this.props.onIncrement(this.props.counter)}
           className="btn btn-secondary btn-sm"
         >
           Increment
+        </button>
+        <button
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+          className="btn btn-danger btn-sm m-2"
+        >
+          Delete
         </button>
         <ul>
           {this.state.tags.map(tag => (
@@ -43,15 +38,16 @@ class Counter extends Component {
 
   getBadgeClasses() {
     let classes = "badge m-2 ";
-    classes += this.state.value === 0 ? "badge-warning" : "badge-primary";
+    classes +=
+      this.props.counter.value === 0 ? "badge-warning" : "badge-primary";
     return classes;
   }
 
   formatCount() {
     // picks the 'count' property of 'this.state' :p
-    const { value: count } = this.state;
+    const { value } = this.props.counter;
 
-    return count === 0 ? "Zero" : count;
+    return value === 0 ? "Zero" : value;
   }
 }
 
