@@ -11,7 +11,21 @@ class Counter extends Component {
     fontWeight: "bold"
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log("prevProps", prevProps);
+    console.log("prevState", prevState);
+
+    if (prevProps.counter.value !== this.props.counter.value) {
+      // Make another server call or sth
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("Counter - UnMount");
+  }
+
   render() {
+    console.log("Counter - Rendered");
     return (
       <React.Fragment>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
